@@ -1,0 +1,15 @@
+- name: Determine Existing Users
+  ansible.builtin.getent:
+    database: passwd
+
+# ensure users are not created if not present
+- name: Add Users to Docker Group
+  when: item in getent_passwd.keys()
+  ansible.builtin.user:
+    name: "{{ item }}"
+    groups: docker
+    append: true
+  loop: "{{ docker_admin_users }}"
+
+- name: Reset SSH Connection to apply changes
+  ansible.builtin.meta: reset_connection

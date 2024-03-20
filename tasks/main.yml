@@ -1,0 +1,43 @@
+- name: Include OS Variables
+  ansible.builtin.include_vars: "{{ lookup('ansible.builtin.first_found', params) }}"
+  vars:
+    params:
+      files:
+      - "{{ ansible_distribution }}.yml"
+      - "{{ ansible_os_family }}.yml"
+      - main.yml
+      paths:
+      - vars
+
+- name: Install Docker
+  ansible.builtin.include_tasks: "setup-{{ ansible_os_family }}.yml"
+
+- name: Configure Docker
+  when:
+  - docker_daemon_options.keys()
+  - docker_daemon_options.keys() | length > 0
+  ansible.builtin.include_tasks: config.yml
+
+- name: Ensure Docker Compose Plugin Backwards Compatibility
+  when:
+  - docker_compose_compatibility_v2
+  - docker_compose_compatibility_v2 | bool
+  ansible.builtin.file:
+    src: /usr/libexec/docker/cli-plugins/docker-compose
+    dest: /usr/bin/docker-compose
+    owner: root
+    group: root
+    state: link
+
+- name: Ensure Docker System State
+  ansible.builtin.systemd_service:
+    name: docker
+    state: "{{ docker_systemd_state }}"
+    enabled: "{{ docker_systemd_enabled }}"
+
+- name: Setup Docker Users
+  when:
+  - docker_admin_users
+  - docker_admin_users is iterable
+  - docker_admin_users | length
+  ansible.builtin.include_tasks: users.yml

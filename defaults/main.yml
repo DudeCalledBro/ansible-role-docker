@@ -1,0 +1,22 @@
+# Setup Docker Repository
+docker_repo_url: https://download.docker.com/linux
+
+docker_apt_ansible_distribution: "{{ 'ubuntu' if ansible_distribution in ['Pop!_OS', 'Linux Mint'] else ansible_distribution }}"
+docker_apt_arch: "{{ 'arm64' if ansible_architecture == 'aarch64' else 'amd64' }}"
+docker_apt_repository: "deb [arch={{ docker_apt_arch }} signed-by=/etc/apt/trusted.gpg.d/docker.asc] {{ docker_repo_url }}/{{ docker_apt_ansible_distribution | lower }} {{ ansible_distribution_release }} stable"
+docker_apt_gpg_key: "{{ docker_repo_url }}/{{ docker_apt_ansible_distribution | lower }}/gpg"
+
+# Setup Docker Compose
+docker_compose_install: true
+docker_compose_compatibility_v2: true
+
+# Setup Docker Systemd Service
+docker_systemd_state: started
+docker_systemd_enabled: true
+docker_systemd_handler_state: restarted
+
+# Configure Docker Daemon
+docker_daemon_options: {}
+
+# Docker Admin Users will be added to Docker Group
+docker_admin_users: []
