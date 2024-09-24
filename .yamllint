@@ -11,7 +11,7 @@ rules:
     indent-sequences: consistent
     check-multi-line-strings: true
   line-length:
-    max: 200
+    max: 250
     level: warning
 
 ignore: |
