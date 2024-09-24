@@ -1,0 +1,7 @@
+#
+# Ansible managed
+#
+*.retry
+*/__pycache__
+*.pyc
+.cache

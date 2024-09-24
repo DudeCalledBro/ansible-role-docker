@@ -1,48 +1,27 @@
-- name: Remove Deprecated Docker Packages
+- name: Remove deprecated docker packages
   ansible.builtin.apt:
     name: "{{ docker_deprecated_packages }}"
     state: absent
 
-- name: Install Docker Dependencies
+- name: Install docker dependencies
   ansible.builtin.apt:
-    name:
-    - apt-transport-https
-    - ca-certificates
-    - curl
+    name: "{{ docker_requirements }}"
     state: present
 
-- name: Install GnuPG (Ubuntu < 20.04 and any other systems)
-  when: ansible_distribution != 'Ubuntu' or ansible_distribution_version is version('20.04', '<')
-  ansible.builtin.apt:
-    name: gnupg2
-    state: present
-
-- name: Install GnuPG (on Ubuntu >= 20.04)
-  when: ansible_distribution == 'Ubuntu' and ansible_distribution_version is version('20.04', '>=')
-  ansible.builtin.apt:
-    name: gnupg
-    state: present
-
-- name: Setup Docker Repository Key
+- name: Setup docker repository key
   ansible.builtin.get_url:
     url: "{{ docker_apt_gpg_key }}"
     dest: /etc/apt/trusted.gpg.d/docker.asc
     mode: 0644
 
-- name: Setup Docker Repository
+- name: Setup docker repository
   ansible.builtin.apt_repository:
     repo: "{{ docker_apt_repository }}"
     state: present
     filename: docker
     update_cache: true
 
-- name: Install Docker Packages
+- name: Install docker
   ansible.builtin.apt:
-    name:
-    - docker-ce
-    - docker-ce-cli
-    - containerd.io
-    - docker-buildx-plugin
-    - docker-compose-plugin
+    name: "{{ docker_packages }}"
     state: present
-    allow_downgrade: true

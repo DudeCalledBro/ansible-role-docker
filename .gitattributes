@@ -1,0 +1,6 @@
+#
+# Ansible managed
+#
+*.yml linguist-detectable=true
+*.yml linguist-language=YAML
+*.yml text eol=lf

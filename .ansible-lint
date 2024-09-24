@@ -1,4 +1,5 @@
+#
+# Ansible managed
+#
 skip_list:
-- 'yaml'
-- 'risky-shell-pipe'
 - 'role-name'

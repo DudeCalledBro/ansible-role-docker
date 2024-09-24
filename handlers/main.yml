@@ -1,4 +1,4 @@
-- name: Restart Docker System Service
+- name: Restart docker system service
   ansible.builtin.systemd_service:
     name: docker
     state: "{{ docker_systemd_handler_state }}"

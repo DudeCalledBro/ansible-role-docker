@@ -1,1 +1,28 @@
-# Empty File
+# docker deprecated packages
+_docker_deprecated_packages:
+  default:
+  - docker-compose
+  - docker-compose-v2
+  - docker-doc
+  - docker.io
+  - podman-docker
+docker_deprecated_packages: "{{ _docker_deprecated_packages[ansible_os_family] | default(_docker_deprecated_packages['default']) }}"
+
+# docker package requirements
+_docker_requirements:
+  default:
+  - apt-transport-https
+  - ca-certificates
+  - curl
+  - gnupg
+docker_requirements: "{{ _docker_requirements[ansible_os_family] | default(_docker_requirements['default']) }}"
+
+# docker packages
+_docker_packages:
+  default:
+  - docker-ce
+  - docker-ce-cli
+  - containerd.io
+  - docker-buildx-plugin
+  - docker-compose-plugin
+docker_packages: "{{ _docker_packages[ansible_os_family] | default(_docker_packages['default']) }}"

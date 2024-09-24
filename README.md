@@ -1,15 +1,22 @@
 # Ansible Role: Docker
 
-> An Ansible Role that installs and configures Docker (currently only Debian/Ubuntu).
+[![CI](https://github.com/DudeCalledBro/ansible-role-docker/actions/workflows/molecule.yml/badge.svg)](https://github.com/DudeCalledBro/ansible-role-docker/actions/workflows/molecule.yml)
 
-## Example
+Install and configure docker.
 
-The following minmal Playbook will setup and configure unattended upgrades.
+## Prerequisites
+
+- Ensure you have Ansible installed (e.g. `pip3 install ansible`)
+- **Development**: Install the pip packages listed in [requirements.txt](requirements.txt)
+
+## Role Variables
+
+The default values for the variables are set in [defaults/main.yml](defaults/main.yml)
 
 ```yaml
 - hosts: all
   roles:
-  - dudecalledbro.docker
+  - role: dudecalledbro.docker
 ```
 
 ## License

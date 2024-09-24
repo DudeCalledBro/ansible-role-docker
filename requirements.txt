@@ -1,0 +1,7 @@
+#
+# Ansible managed
+#
+ansible
+docker
+molecule
+molecule-plugins[docker]

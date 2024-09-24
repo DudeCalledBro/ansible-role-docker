@@ -1,5 +1,0 @@
-docker_deprecated_packages:
-- docker.io
-- docker-compose
-- docker-doc
-- podman-docker
